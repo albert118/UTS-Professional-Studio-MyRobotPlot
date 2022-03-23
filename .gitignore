@@ -131,3 +131,6 @@ dmypy.json
 # Virtualenv windows
 Scripts/*
 pyvenv.cfg
+
+# Embedded Data sets (too large for repo)
+EmbeddedData/*
