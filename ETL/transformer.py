@@ -10,7 +10,6 @@ LOG_LVL = logging.NOTSET
 logging.basicConfig(level=LOG_LVL)
 _logger = logging.getLogger(__name__)
 
-import cProfile
 
 class Transformer:
     def __init__(self, df: DataFrame):
@@ -24,13 +23,13 @@ class Transformer:
         return self
 
     def Drop_RowIds(self, ids: list):
-        self._data = self._data.drop(ids, axis=0)
+        self._data = self._data.drop(ids, axis=0, errors='ignore')
 
         return self
 
     def Transform_Col_Types(self):
         for c in _getColsWithDtype(self._data, 'O'):
-            _checkPerformance(self._attempt_json_col(c))
+            self._attempt_json_col(c)
 
         return self
 
@@ -66,5 +65,3 @@ def _getColsWithDtype(df, tCol):
     col_dtypes = dict(df.dtypes)
     tCol_cols = list(filter(lambda key: col_dtypes[key] == np.dtype(tCol), list(col_dtypes.keys())))
     return tCol_cols
-
-def _checkPerformance(foo): cProfile.run(f'{foo}')
