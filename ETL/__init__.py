@@ -1,4 +1,4 @@
-from .etl import DefaultPipeline
+from .etl import DefaultPipeline, HandleNormalisedFramesPipeline
 
 
 """

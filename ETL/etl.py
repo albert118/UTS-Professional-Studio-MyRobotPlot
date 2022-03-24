@@ -1,5 +1,5 @@
 from .extractor import Extract
-from .transformer import Transform
+from .transformer import Transformer
 
 
 MAX_JSON_SIZE = 300
@@ -12,6 +12,24 @@ def DefaultPipeline(fileName: str, dropIds=[]):
     colB = rawFrame.columns[1]
     filteredFrame = rawFrame[(rawFrame[colA].str.len() <= MAX_JSON_SIZE) & (rawFrame[colB].str.len() <= MAX_JSON_SIZE)]
 
-    transformedFrame = Transform(filteredFrame, dropIds)
+    if (filteredFrame.shape[0] < 1): return filteredFrame
 
-    return transformedFrame
+    return (
+        Transformer(filteredFrame)
+            .Drop_Invalid()
+            .Drop_RowIds(dropIds)
+            .Transform_Col_Types()
+            .GetData()
+    )
+
+
+def HandleNormalisedFramesPipeline(fileName: str, dropIds=[]):
+    rawFrame = Extract(fileName)
+
+    return (
+        Transformer(rawFrame)
+            .Drop_Unnamed_Cols()
+            .Drop_Invalid()
+            .Drop_RowIds(dropIds)
+            .GetData()
+    )

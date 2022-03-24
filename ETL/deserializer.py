@@ -6,11 +6,14 @@ LOG_LVL = logging.NOTSET
 logging.basicConfig(level=LOG_LVL)
 _logger = logging.getLogger(__name__)
 
+_hookNameSpaces = lambda data: json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+
+_defaultLoad = lambda data: json.loads(data)
 
 class Deserializer:
-    def Deserialize(self, data):
+    def Deserialize(self, data, namespace=False):
         try:
-            return json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+            return _hookNameSpaces(data) if namespace else _defaultLoad(data)
         except json.JSONDecodeError as e:
             _logger.error(f"{e} raised by JSONDecoder while attempting to decode '{data}' to SimpleNamespace")
             if(LOG_LVL is logging.DEBUG or LOG_LVL is logging.NOTSET):
@@ -23,3 +26,4 @@ class Deserializer:
             input()
             _logger.error(f"Decoding serial data failed to parse with error '{e}'")
             return None
+

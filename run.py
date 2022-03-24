@@ -2,21 +2,32 @@
 
 import logging
 
-from ETL import *
+from ETL import DefaultPipeline, HandleNormalisedFramesPipeline
 
 LOG_LVL = logging.NOTSET
 logging.basicConfig(level=LOG_LVL)
 _logger = logging.getLogger(__name__)
 
 
-fn = "EmbeddedData\\TheMoviesDataset\\credits.csv"
-dropRowIds = [69061, 132166, 269843]
+# Default pipeline config
+# fn = "EmbeddedData\\TheMoviesDataset\\credits.csv"
+# dropRowIds = [69061, 132166, 269843]
+# loadedFrame = DefaultPipeline(fn, dropRowIds)
 
-_logger.info("Beginning: Default Pipeline Run")
-loadedFrame = DefaultPipeline(fn, dropRowIds)
-_logger.info("Finished:  Default Pipeline Run")
+# Normalised frames 'semi-processed'
+fileNames = [
+    'cast_normalised',
+    'crew_normalised'
+]
 
-_logger.info(loadedFrame.info())
-_logger.info(loadedFrame.head())
+for fn in fileNames:
+    _logger.info("Beginning: Pipeline Run")
+    
+    loadedFrame = HandleNormalisedFramesPipeline(fn)
 
-loadedFrame.to_csv('cleaned.csv')
+    _logger.info("Finished: Pipeline Run")
+
+    _logger.info(loadedFrame.info())
+    _logger.info(loadedFrame.head())
+    
+    loadedFrame.to_csv(f'{fn}_processed.csv')
