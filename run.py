@@ -18,3 +18,5 @@ _logger.info("Finished:  Default Pipeline Run")
 
 _logger.info(loadedFrame.info())
 _logger.info(loadedFrame.head())
+
+loadedFrame.to_csv('cleaned.csv')
