@@ -11,7 +11,7 @@ _hookNameSpaces = lambda data: json.loads(data, object_hook=lambda d: SimpleName
 _defaultLoad = lambda data: json.loads(data)
 
 class Deserializer:
-    def Deserialize(self, data, namespace=False):
+    def deserialize(self, data, namespace=False):
         try:
             return _hookNameSpaces(data) if namespace else _defaultLoad(data)
         except json.JSONDecodeError as e:

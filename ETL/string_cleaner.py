@@ -11,7 +11,7 @@ class StringCleaner:
         self.akaChar= '`'
         self.data = dirtyString
 
-    def Clean_DoubleQuotes_WithinSingleQuotes(self):
+    def clean_doubleQuotes_within_single_quotes(self):
         """
         for examples such as: '" #1 Jack Jones _the-(best1234567890)_"'
         replaces with " #1 Jack Jones _the-(best1234567890)_ "
@@ -22,7 +22,7 @@ class StringCleaner:
         
         return self
 
-    def Clean_Single_Apostrophes(self): 
+    def clean_single_apostrophes(self): 
         """
         simply converting all ' to " - ignoring examples such as: "harry's"
         """
@@ -43,12 +43,12 @@ class StringCleaner:
 
         return self
 
-    def Clean_None_Types(self):
+    def clean_none_types(self):
         findNones = "None"
         self.data = re.sub(findNones, '"None"', self.data)
         return self
 
-    def Clean_Aka_Quotes_Escapes(self):
+    def clean_aka_quotes_escapes(self):
         """
         Captures an aka quoted name such as 'C3P-0' or "C3P-0" and replaces it with `C3P-0`
         the re-quote is configured in the __init__ with akaChar
@@ -67,26 +67,26 @@ class StringCleaner:
         
         return self
 
-    def Clean_Start_And_End_Of_String(self):
+    def clean_start_and_end_of_string(self):
         # just to be fun, dirty json can be wrapped in extra quotes " " that throw the deserializer! YAY
         rg = '^"|"$'
         self.data = re.sub(rg, '', self.data.strip())
 
         return self
 
-    def GetData(self): return self.data
+    def get_data(self): return self.data
 
 
-def DeepClean(dirtyLaundry: str) -> str:
+def deep_clean(dirtyLaundry: str) -> str:
     try:
         return (
             StringCleaner(dirtyLaundry)
-                .Clean_DoubleQuotes_WithinSingleQuotes()
-                .Clean_Aka_Quotes_Escapes()
-                .Clean_None_Types()
-                .Clean_Single_Apostrophes()
-                .Clean_Start_And_End_Of_String()
-                .GetData()
+                .clean_doubleQuotes_within_single_quotes()
+                .clean_aka_quotes_escapes()
+                .clean_none_types()
+                .clean_single_apostrophes()
+                .clean_start_and_end_of_string()
+                .get_data()
         )
     except Exception as e:
         _logger.error(f"error when cleaning data '{e}'")
