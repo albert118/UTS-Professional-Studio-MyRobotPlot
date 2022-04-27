@@ -1,11 +1,11 @@
 import logging
 
 import numpy as np
-from pandas import DataFrame
 import pandas as pd
+from pandas import DataFrame
 
 from .deserializer import Deserializer
-from .stringCleaner import DeepClean
+from .string_cleaner import deep_clean
 
 LOG_LVL = logging.NOTSET
 logging.basicConfig(level=LOG_LVL)
@@ -21,25 +21,25 @@ class Transformer:
         self.actionName = "transform operation"
         self._data = df
 
-    def Drop_Invalid(self): 
+    def drop_invalid(self): 
         self._data = self._data.dropna()
 
         return self
 
-    def Drop_RowIds(self, ids: list):
+    def drop_rowIds(self, ids: list):
         self._data = self._data.drop(ids, axis=0, errors='ignore')
 
         return self
 
-    def Drop_Unnamed_Cols(self):
+    def drop_unnamed_cols(self):
         unnamed_cols = filter(lambda s: 'Unnamed: ' in s, self._data.columns)
 
         self._data = self._data.drop(unnamed_cols, axis=1)
 
         return self
 
-    def Transform_Col_Types(self):
-        for c in _getColsWithDtype(self._data, 'O'):
+    def transform_col_types(self):
+        for c in _get_cols_with_dtype(self._data, 'O'):
             self._attempt_json_col(c)
         
         for c in filter(lambda x: '_normalised' in x, self._data.columns):
@@ -49,14 +49,14 @@ class Transformer:
 
     def _attempt_json_col(self, col):
         try:
-            testClean = DeepClean(self._data[col].iloc[0])
-            Deserializer().Deserialize(testClean)
+            testClean = deep_clean(self._data[col].iloc[0])
+            Deserializer().deserialize(testClean)
 
             _logger.info(f"serial JSON detected for '{col}'")
 
             assignKwargs = { 
-                f'{col}_cleaned': lambda df: df[col].apply(DeepClean),
-                f'{col}_dict': lambda df: df[f'{col}_cleaned'].apply(Deserializer().Deserialize),
+                f'{col}_cleaned': lambda df: df[col].apply(deep_clean),
+                f'{col}_dict': lambda df: df[f'{col}_cleaned'].apply(Deserializer().deserialize),
                 f'{col}_normalised': lambda df: df[f'{col}_dict'].apply(pd.json_normalize),
             }
 
@@ -75,10 +75,10 @@ class Transformer:
         pd.concat(self._data[col].to_list()).to_csv(f'{col}.csv')
         _logger.info(f"'{col}' was expanded to usable dataset and saved to csv of the same name")
 
-    def GetData(self) -> DataFrame: return self._data
+    def get_data(self) -> DataFrame: return self._data
 
 
-def _getColsWithDtype(df, tCol):
+def _get_cols_with_dtype(df, tCol):
     col_dtypes = dict(df.dtypes)
     tCol_cols = list(filter(lambda key: col_dtypes[key] == np.dtype(tCol), list(col_dtypes.keys())))
     return tCol_cols
