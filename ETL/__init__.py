@@ -2,7 +2,7 @@ from .etl import DefaultPipeline, HandleNormalisedFramesPipeline
 
 
 """
-.. module:: ETL
+.. module:: etl
     :platform: Unix, Windows
     :synopsis: Exposes ETL (Extract, Transform, and Load) pipelines for datasets
 
@@ -13,5 +13,3 @@ from .etl import DefaultPipeline, HandleNormalisedFramesPipeline
 """
 
 __author__ = "Albert Ferguson"
-
-__all__ = [ "DefaultPipeline" ]
