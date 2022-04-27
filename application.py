@@ -1,9 +1,7 @@
-import sys 
-import os
 import logging
-from logging import Logger
 import re
 from argparse import ArgumentParser
+
 import openai
 
 GENRE_LIST = ['action', 'comedy', 'drama', 'fantasy', 'horror', 'mystery', 'romance', 'thriller', 'western']
@@ -12,23 +10,27 @@ OPENAI_KEY = "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"
 VOWELS = ['a','e', 'i', 'o', 'u']
 
 def check_param(args):
+    # TODO: fix logging
     if args.tone and args.tone.lower() not in TONE_LIST: 
-        logging.error('Tone must be from list: happy, sad, serious, humorous, threatening, pessimistic, optimistic, anxious, excited, depressing.')
+        pass
+        #logging.error('Tone must be from list: happy, sad, serious, humorous, threatening, pessimistic, optimistic, anxious, excited, depressing.')
     if args.genre.lower() not in GENRE_LIST:
-        logging.error('Genre must be from list: action, comedy, drama, fantasy, horror, mystery, romance, thriller, western.')
+        pass
+        #logging.error('Genre must be from list: action, comedy, drama, fantasy, horror, mystery, romance, thriller, western.')
 
 def getCharacters(args):
     # TODO: If we want to specify main/secondary characters
+
     if re.search(',', args): 
         characters = []
         for i in re.findall('[^,]+', args):
             characters.append(i.strip())
     return characters
 
-# TODO: Implement length of response from CLI input. 
 def getGPT3(prompt, engine='text-davinci-002', max_tokens=3000,
-         temperature=0.7, top_p=1, frequency_penalty=0, presence_penalty=0):
+            temperature=0.7, top_p=1, frequency_penalty=0, presence_penalty=0):
 
+    # TODO: Implement length of response from CLI input. 
     response = openai.Completion.create(
         prompt=prompt,
         engine=engine,
