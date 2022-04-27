@@ -10,4 +10,4 @@ from .summariser import Summariser
 """
 
 __author__ = "Albert Ferguson"
-__all__ = ["Summariser"]
+__all__ = ["summariser"]
