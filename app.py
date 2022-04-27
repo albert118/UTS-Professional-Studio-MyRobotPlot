@@ -65,7 +65,7 @@ def init_argparser():
                         help="Length of the movie plot you want return in characters. Recommended value 250"
     )
 
-    _parser.add_argument("-i", '--iterations', type=int, default=5, 
+    _parser.add_argument("-i", '--iterations', type=int, default=2, 
                         help="Number of iterations the movie plot should be improved with"
     )
 

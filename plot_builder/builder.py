@@ -68,11 +68,11 @@ def run_movie_plot_tool(_logger, _args) -> list:
         _logger.info(f"Loop: {i}")
 
         if not valid: 
-            validated = validatePlot(plot_iters[i - 1]['plot'], _args.genre)
+            validated = validatePlot(plot_iters[i - 1].plot, _args.genre)
         else: 
-            validated = plot_iters[i - 1]['plot']
+            validated = plot_iters[i - 1].plot
         
-        plot = (generate_improved_plot(validated, plot_iters[i - 1]['improvement'])).strip()
+        plot = (generate_improved_plot(validated, plot_iters[i - 1].improvement)).strip()
         star_rating = get_rating(plot)
         genre_rating = get_genre(plot, _args.genre)
         improvement = get_improvements(plot)
