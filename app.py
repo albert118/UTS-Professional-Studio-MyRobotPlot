@@ -48,7 +48,6 @@ def init_argparser():
     )
     
     _parser.add_argument("-g", "--genre", type=str,
-                        default='comedy',
                         help="Genre of the movie you want generated. Choose from action, comedy, drama, fantasy, horror, mystery, romance, thriller, western"
     )
 
@@ -57,7 +56,6 @@ def init_argparser():
     )
 
     _parser.add_argument("-c", '--character', type=str, 
-                        default='Alice, Daniel',
                         help="Characters you want in the movie. Can be existing movie characters or made up. Separate characters by comma. E.g., 'Alice, Howin'"
     )
 
@@ -66,7 +64,7 @@ def init_argparser():
     )
 
     _parser.add_argument("-i", '--iterations', type=int, default=2, 
-                        help="Number of iterations the movie plot should be improved with"
+                        help="Number of iterations the movie plot should be improved with (defaults to 2)"
     )
 
     _parser.add_argument("--preprocessing-pipelines", action="store_true",
