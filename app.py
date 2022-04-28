@@ -94,3 +94,6 @@ def run_pipelines(_logger):
         show_pipeline_results(loaded_frame, _logger)
         
         loaded_frame.to_csv(f'{normalise_filepath(fn)}_processed.csv')
+
+if __name__ == "__main__":
+    main()
