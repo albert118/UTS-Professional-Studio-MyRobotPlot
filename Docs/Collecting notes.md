@@ -1,19 +1,19 @@
 # Keywords and Glossary
 
-Corpus              - A domain of information, typically referring to a set of texts.
-NN                  - Neural Network. At its simplest this is a single perceptron (neuron).     
+* Corpus            - A domain of information, typically referring to a set of texts.
+* NN                - Neural Network. At its simplest this is a single perceptron (neuron).     
                         Typically, though, this is a model consisting of multiple "neurons" in multiple "layers".
-Model               - A general term for the compiled relationship from training data. 
-Perceptron          - A simple computer simulation of a neuron. Often used as a simple binary 
+* Model             - A general term for the compiled relationship from training data. 
+* Perceptron        - A simple computer simulation of a neuron. Often used as a simple binary 
                         classification example algorithm.
-transfer learning   - A research problem in which storing knowledge gained should be independent 
+* transfer learning - A research problem in which storing knowledge gained should be independent 
                         of the problem learnt from, and as such, applicable to a related problem.
-classifier          - An algorithm that determines some relation between inputs and outputs, ie. 
+* classifier        - An algorithm that determines some relation between inputs and outputs, ie. 
                         "classification".
-features            - An atomic or indivisible characteristic of a "thing" (phenomenon) under 
-                    study.
-prompt              - An initial input to bootstrap a model.
-token               - Generally, a string of contiguous chars OR a any real number. A token 
+* features          - An atomic or indivisible characteristic of a "thing" 
+                    (phenomenon) under study.
+* prompt            - An initial input to bootstrap a model.
+* token             - Generally, a string of contiguous chars OR a any real number. A token 
                         is taken to be the atomic (granular) unit of operation for both the input and output domains.
                         3 levels are often used: word, char or n-gram chars.
 
