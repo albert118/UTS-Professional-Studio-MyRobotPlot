@@ -1,9 +1,9 @@
 import argparse
 import logging
 
-from common.file_handler import normalise_filepath
-from etl import default_pipeline, handle_normalised_frames_pipeline
-from plot_builder import builder
+from .common.file_handler import normalise_filepath
+from .etl import default_pipeline, handle_normalised_frames_pipeline
+from .plot_builder import builder
 
 GENRE_LIST = ['action', 'comedy', 'drama', 'fantasy', 'horror', 'mystery', 'romance', 'thriller', 'western']
 TONE_LIST = ['happy', 'sad', 'serious', 'humorous', 'threatening', 'pessimistic', 'optimistic', 'anxious', 'excited', 'depressing']
