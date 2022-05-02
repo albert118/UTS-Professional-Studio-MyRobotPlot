@@ -93,7 +93,7 @@ def run_movie_plot_tool(_logger, _args) -> list:
         char_confirm = confirm_chars(_logger,plot,characters)
         plot_iters.append(PlotIteration(
             _logger,
-            movie_plot,
+            plot,
             star_rating,
             genre_rating,
             improvement,
