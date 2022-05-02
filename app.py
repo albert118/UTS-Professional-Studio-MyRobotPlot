@@ -1,11 +1,11 @@
 import argparse
 import logging
 
-from common.file_handler import normalise_filepath
-from etl import default_pipeline, handle_normalised_frames_pipeline
-from plot_builder import builder
+from .common.file_handler import normalise_filepath
+from .etl import default_pipeline, handle_normalised_frames_pipeline
+from .plot_builder import builder
 
-GENRE_LIST = ['action', 'comedy', 'drama', 'fantasy', 'horror', 'mystery', 'romance', 'thriller', 'western']
+GENRE_LIST = ['action','anime', 'comedy', 'drama', 'fantasy', 'horror', 'mystery', 'romance', 'thriller', 'western']
 TONE_LIST = ['happy', 'sad', 'serious', 'humorous', 'threatening', 'pessimistic', 'optimistic', 'anxious', 'excited', 'depressing']
 VOWELS = ['a','e', 'i', 'o', 'u']
 
@@ -38,9 +38,15 @@ def setup_argparser(_logger):
 
 def check_args(_args, _logger):
     if _args.tone and _args.tone.lower() not in TONE_LIST: 
-        _logger.error('Tone must be from list: happy, sad, serious, humorous, threatening, pessimistic, optimistic, anxious, excited, depressing.')
+        
+        raise NotImplementedError(
+            'Tone must be from list: happy, sad, serious, humorous, threatening, pessimistic, optimistic, anxious, excited, depressing.'
+        )
     if _args.genre.lower() not in GENRE_LIST:
-        _logger.error('Genre must be from list: action, comedy, drama, fantasy, horror, mystery, romance, thriller, western.')
+        raise NotImplementedError(
+            'Genre must be from list: action, comedy, drama, fantasy, horror, mystery, romance, thriller, western.'
+        )
+        
 
 def init_argparser():
     _parser = argparse.ArgumentParser(
@@ -56,7 +62,7 @@ def init_argparser():
     )
 
     _parser.add_argument("-c", '--character', type=str, 
-                        help="Characters you want in the movie. Can be existing movie characters or made up. Separate characters by comma. E.g., 'Alice, Howin'"
+                        help="Characters you want in the movie. Can be existing movie characters or made up. Separate characters by comma, and add quotations. E.g., 'Alice, Howin'"
     )
 
     _parser.add_argument("-l", '--length', type=int,
@@ -94,6 +100,3 @@ def run_pipelines(_logger):
         show_pipeline_results(loaded_frame, _logger)
         
         loaded_frame.to_csv(f'{normalise_filepath(fn)}_processed.csv')
-
-if __name__ == "__main__":
-    main()
