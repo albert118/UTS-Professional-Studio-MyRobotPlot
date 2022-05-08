@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Welcome to ThisMovieDoesntExist! {% endblock %}</h1>
+    <p> Here are some example plots created by GPT-3:
+    </p>
+    {% for movie in movies %}
+        <a href="{{ url_for('movie', movie_id=movie['id']) }}">
+            <h2>{{ movie['title'] }}</h2>
+        </a>
+        <span class="badge badge-primary">{{ movie['created'] }}</span>
+        <a href="{{ url_for('edit', id=movie['id']) }}">
+            <span class="badge badge-warning">Edit</span>
+        </a>
+        <hr>
+    {% endfor %}
+{% endblock %}

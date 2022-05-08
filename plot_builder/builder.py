@@ -9,11 +9,11 @@ VOWELS = ['a', 'e', 'i', 'o', 'u']
 
 
 class PlotIteration:
-	def __init__(self, _logger, plot: str, star_rating: str, genre_rating: str, improvment: str):
+	def __init__(self, _logger, plot: str, star_rating: str, genre_rating: str, improvement: str):
 		self.plot = plot
 		self.star_rating = star_rating
 		self.genre_rating = genre_rating
-		self.improvement = improvment
+		self.improvement = improvement
 
 		_logger.info(self)
 
@@ -131,7 +131,7 @@ def get_gpt3(prompt, engine='text-davinci-002', max_tokens=3000,
 
 
 def generate_prompt_init(_logger, genre, tone, characters, length):
-	model_prompt = "Write a movie plot from scratch, without using knowledge of existing movies, using the following " \
+	model_prompt = "Write a movie plot from scratch using the following " \
 				   "criteria: \n" + \
 				   "Genre: " + genre + "\n"
 	if tone:

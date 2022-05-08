@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table style="width:100%">
+    <td>
+    <h2>{% block title %} {{ movie['title'] }} {% endblock %}</h2>
+    <span class="badge badge-primary">{{ movie['created'] }}</span>
+
+    <head>
+        <link rel="shortcut icon" href="{{ url_for('static', filename= 'res/img/casino.jpg') }}">
+            <title id="title">
+                 Casino Royale
+            </title>
+    </head>
+    <div>
+
+        <div id="plot">
+            <p>Genre: {{ movie['genre'] }}</p>
+            <p>Characters: {{ movie['characters'] }}</p>
+            <p>Tone: {{ movie['tone'] }}</p>
+            <p>Plot length: {{ movie['plot_length'] }}</p>
+            <p>Iterations: {{ movie['iterations'] }}</p
+            <p>{{ movie['plot'] }}</p>
+        </div>
+
+
+    <table id="table">
+        <div>
+            <tr>
+                <td><div id="a">
+                    <i><img id="imdb" src="{{ url_for('static', filename= 'res/icon/imdb.svg') }}" width="auto" height="30"></i>
+                    </div>
+                </td>
+                <td>
+                    8.0
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="b"><i>
+                    <img id="tomato" src="{{ url_for('static', filename= 'res/icon/tomatoes.jpg') }}" width="auto" height="50">
+                    </i>
+                    </div>
+                </td>
+                <td>
+                     86%
+                </td>
+        </div>
+    </table>
+    <div id="cast">
+        <b>Director:</b><br>
+        <b>Cast:</b><br>
+
+    </div>
+    </td>
+    <td>
+        <img id="photo" src="{{ url_for('static', filename= 'res/img/casino.jpg') }}">
+    </td>
+</table>
+{% endblock %}
