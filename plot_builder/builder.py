@@ -1,8 +1,4 @@
 import re
-
-from click import confirm
-from numpy import char, character
-
 import openai
 
 GENRE_LIST = ['action','anime', 'comedy', 'drama', 'fantasy', 'horror', 'mystery', 'romance', 'thriller', 'western']
