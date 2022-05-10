@@ -41,7 +41,7 @@ def movie(movie_id):
 @app.route('/create', methods=('GET', 'POST'))
 def create():
     if request.method == 'POST':
-        title = request.form['title']
+        user_title = request.form['title']
         genre = request.form['genre']
         characters = request.form['characters']
         tone = request.form['tone']
@@ -49,6 +49,10 @@ def create():
         iterations = request.form['iterations']
         args = {"genre": genre, "characters": characters, "tone": tone, "plot_length": plot_length, "iterations": int(iterations)}
         title, plot, imdb_rating, rt_rating = web_tool(args)
+        if user_title == '':
+            title = title
+        else:
+            title = user_title
         conn = get_db_connection()
         conn.execute('INSERT INTO movies (title, genre, plot, characters, tone, plot_length, iterations, imdb_rating, '
                      'rt_rating) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
