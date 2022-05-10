@@ -113,7 +113,7 @@ def get_characters(_logger, characters):
 
 
 def get_gpt3(prompt, engine='text-davinci-002', max_tokens=3000,
-			 temperature=0.7, top_p=1, frequency_penalty=0, presence_penalty=0):
+			 temperature=1, top_p=1, frequency_penalty=0, presence_penalty=0):
 	# TODO: Implement length of response from CLI input.
 	response = openai.Completion.create(
 		prompt=prompt,

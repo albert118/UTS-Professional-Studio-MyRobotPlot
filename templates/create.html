@@ -2,33 +2,78 @@
 
 {% block content %}
 <h1>{% block title %} Create a New Movie Plot {% endblock %}</h1>
-
+<br><br>
 <form method="post">
     <div class="form-group">
         <label for="title">Movie Title</label>
         <input type="text" name="title"
                placeholder="No title (Let GPT generate a title)" class="form-control"
                value="{{ request.form['title'] }}">
-
+        <br>
         <label for="genre">Genre</label>
-        <textarea name="genre" placeholder="Action"
-                  class="form-control">{{ request.form['genre'] }}</textarea>
-
+<!--        <textarea name="genre" placeholder="Eg. Fantasy"-->
+<!--                  class="form-control">{{ request.form['genre'] }}</textarea>-->
+        <br>
+        <select id="genre" name="genre" >
+            <option value="action">Action</option>
+            <option value="comedy">Comedy</option>
+            <option value="drama">Drama</option>
+            <option value="fantasy">Fantasy</option>
+            <option value="horror">Horror</option>
+            <option value="mystery">Mystery</option>
+            <option value="romance">Romance</option>
+            <option value="thriller">Thriller</option>
+            <option value="western">Western</option>
+            {{ request.form['genre'] }}
+        </select>
+        <br>
+        <br>
         <label for="characters">Characters</label>
-        <textarea name="characters" placeholder="None"
+        <textarea name="characters" placeholder="Eg. James Bond a spy from the British secret service"
                   class="form-control">{{ request.form['characters'] }}</textarea>
-
+        <br>
         <label for="tone">Tone</label>
-        <textarea name="tone" placeholder="None"
-                  class="form-control">{{ request.form['tone'] }}</textarea>
-
+<!--        <textarea name="tone" placeholder="Eg. Happy"-->
+<!--                  class="form-control">{{ request.form['tone'] }}</textarea>-->
+        <br>
+        <select id="tone" name="tone" >
+            <option value="happy">Happy</option>
+            <option value="sad">Sad</option>
+            <option value="serious">Serious</option>
+            <option value="humorous">Humorous</option>
+            <option value="threatening">Threatening</option>
+            <option value="pessimistic">Pessimistic</option>
+            <option value="optimistic">Optimistic</option>
+            <option value="anxious">Anxious</option>
+            <option value="excited">Excited</option>
+            <option value="depressing">Depressing</option>
+            {{ request.form['tone'] }}
+        </select>
+        <br>
+        <br>
         <label for="plot_length">Plot length</label>
-        <textarea name="plot_length" placeholder="3000"
-                  class="form-control">{{ request.form['plot_length'] }}</textarea>
-
+<!--        <textarea name="plot_length" placeholder="Default: 3000"-->
+<!--                  class="form-control">{{ request.form['plot_length'] }}</textarea>-->
+        <br>
+        <select id="plot_length" name="plot_length" >
+            <option value="short">Short</option>
+            <option value="medium">Medium</option>
+            <option value="long">Long</option>
+            {{ request.form['plot_length'] }}
+        </select>
+        <br>
+        <br>
         <label for="iterations">Iterations</label>
-        <textarea name="iterations" placeholder="2"
-                  class="form-control">{{ request.form['iterations'] }}</textarea>
+<!--        <textarea name="iterations" placeholder="Default: 2"-->
+<!--                  class="form-control">{{ request.form['iterations'] }}</textarea>-->
+        <br>
+        <select id="iterations" name="iterations" >
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            {{ request.form['iterations'] }}
+        </select>
+        <br>
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Submit</button>

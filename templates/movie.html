@@ -4,7 +4,7 @@
 <table style="width:100%">
     <td>
     <h2>{% block title %} {{ movie['title'] }} {% endblock %}</h2>
-    <span class="badge badge-primary">{{ movie['created'] }}</span>
+<!--    <span class="badge badge-primary">{{ movie['created'] }}</span>-->
 
     <head>
         <link rel="shortcut icon" href="{{ url_for('static', filename= 'res/img/casino.jpg') }}">
@@ -13,15 +13,20 @@
             </title>
     </head>
     <div>
-
+        <br>
         <div id="plot">
-            <p>Genre: {{ movie['genre'] }}</p>
-            <p>Characters: {{ movie['characters'] }}</p>
-            <p>Tone: {{ movie['tone'] }}</p>
-            <p>Plot length: {{ movie['plot_length'] }}</p>
-            <p>Iterations: {{ movie['iterations'] }}</p
+            <br>
             <p>{{ movie['plot'] }}</p>
+            <details>
+                <summary>GPT-3 Prompt details</summary>
+                <p>Genre: {{ movie['genre'] }}</p>
+                <p>Characters: {{ movie['characters'] }}</p>
+                <p>Tone: {{ movie['tone'] }}</p>
+                <p>Plot length: {{ movie['plot_length'] }}</p>
+                <p>Iterations: {{ movie['iterations'] }}</p>
+            </details>
         </div>
+    <br>
 
 
     <table id="table">
@@ -47,11 +52,11 @@
                 </td>
         </div>
     </table>
-    <div id="cast">
-        <b>Director:</b><br>
-        <b>Cast:</b><br>
+<!--    <div id="cast">-->
+<!--        <b>Director:</b><br>-->
+<!--        <b>Cast:</b><br>-->
 
-    </div>
+<!--    </div>-->
     </td>
     <td>
         <img id="photo" src="{{ url_for('static', filename= 'res/img/casino.jpg') }}">

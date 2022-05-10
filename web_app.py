@@ -57,7 +57,7 @@ def create():
             iterations = 2
         # if not genre:
         #     flash('Genre is required!')
-        args = {"genre": genre, "characters": characters, "tone": tone, "plot_length": int(plot_length), "iterations": int(iterations)}
+        args = {"genre": genre, "characters": characters, "tone": tone, "plot_length": plot_length, "iterations": int(iterations)}
         plot = web_tool(args)
         conn = get_db_connection()
         conn.execute('INSERT INTO movies (title, genre, plot, characters, tone, plot_length, iterations) VALUES (?, ?, ?, ?, ?, ?, ?)',
