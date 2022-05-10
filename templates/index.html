@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<main>
     <h1 style="padding-bottom: 20px">{% block title %} Welcome to MyRoblotPlot! {% endblock %}</h1>
     <p> Here are some example plots created by GPT-3:
     </p>
@@ -14,4 +15,5 @@
         </a>
         <hr>
     {% endfor %}
+</main>
 {% endblock %}

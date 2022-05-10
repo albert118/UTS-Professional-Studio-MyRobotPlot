@@ -1,7 +1,63 @@
-h1 {
-    border: 2px #eee solid;
-    color: brown;
-    text-align: center;
+.head1 {
+    font-size:40px;
+    color:#009900;
+    font-weight:bold;
+}
+
+.middle {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+
+.container * {
+    box-sizing: border-box;
     padding: 10px;
+}
+
+h2 {
+    font-size:40px;
+    margin-left:10px;
+    margin-bottom:15px;
+}
+
+.form_div {
+    margin: 0 auto;
+    width: 75%;
+    text-align: left;
+    float: center;
+    box-sizing: border-box;
+    padding: 50px;
+}
+
+main {
+    margin: 0 auto;
+    width: 50%;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 50px;
+}
+aside {
+    margin: 0 auto;
+    width: 20%;
+    text-align: center;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 50px;
+
+}
+
+footer {
+    width: 100%;
+    bottom: 0px;
+    background-color: #000;
+    color: #fff;
+    position: absolute;
+    padding-top:20px;
+    padding-bottom:50px;
+    text-align:center;
+    font-size:30px;
+    font-weight:bold;
 }
 

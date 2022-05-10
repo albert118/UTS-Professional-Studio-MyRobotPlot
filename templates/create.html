@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="form_div">
 <h1>{% block title %} Create a New Movie Plot {% endblock %}</h1>
 <br><br>
 <form method="post">
     <div class="form-group">
-        <label for="title">Movie Title</label>
+        <label for="title">Movie Title:</label>
         <input type="text" name="title"
                placeholder="No title (Let GPT generate a title)" class="form-control"
                value="{{ request.form['title'] }}">
         <br>
-        <label for="genre">Genre</label>
+        <label for="genre">Genre:</label>
 <!--        <textarea name="genre" placeholder="Eg. Fantasy"-->
 <!--                  class="form-control">{{ request.form['genre'] }}</textarea>-->
         <br>
@@ -28,11 +29,11 @@
         </select>
         <br>
         <br>
-        <label for="characters">Characters</label>
+        <label for="characters">Characters:</label>
         <textarea name="characters" placeholder="Eg. James Bond a spy from the British secret service"
                   class="form-control">{{ request.form['characters'] }}</textarea>
         <br>
-        <label for="tone">Tone</label>
+        <label for="tone">Tone:</label>
 <!--        <textarea name="tone" placeholder="Eg. Happy"-->
 <!--                  class="form-control">{{ request.form['tone'] }}</textarea>-->
         <br>
@@ -51,7 +52,7 @@
         </select>
         <br>
         <br>
-        <label for="plot_length">Plot length</label>
+        <label for="plot_length">Plot length:</label>
 <!--        <textarea name="plot_length" placeholder="Default: 3000"-->
 <!--                  class="form-control">{{ request.form['plot_length'] }}</textarea>-->
         <br>
@@ -63,7 +64,7 @@
         </select>
         <br>
         <br>
-        <label for="iterations">Iterations</label>
+        <label for="iterations">Iterations:</label>
 <!--        <textarea name="iterations" placeholder="Default: 2"-->
 <!--                  class="form-control">{{ request.form['iterations'] }}</textarea>-->
         <br>
@@ -79,4 +80,5 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </form>
+</div>
 {% endblock %}

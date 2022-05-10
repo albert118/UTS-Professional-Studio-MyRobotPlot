@@ -42,26 +42,17 @@ def movie(movie_id):
 def create():
     if request.method == 'POST':
         title = request.form['title']
-        if title is '':
-            title = 'No Title'
         genre = request.form['genre']
-        if genre is '':
-            genre = 'action'
         characters = request.form['characters']
         tone = request.form['tone']
         plot_length = request.form['plot_length']
-        if plot_length is '':
-            plot_length = 3000
         iterations = request.form['iterations']
-        if iterations is '':
-            iterations = 2
-        # if not genre:
-        #     flash('Genre is required!')
         args = {"genre": genre, "characters": characters, "tone": tone, "plot_length": plot_length, "iterations": int(iterations)}
-        plot = web_tool(args)
+        title, plot, imdb_rating, rt_rating = web_tool(args)
         conn = get_db_connection()
-        conn.execute('INSERT INTO movies (title, genre, plot, characters, tone, plot_length, iterations) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                     (title, genre, plot, characters, tone, plot_length, iterations))
+        conn.execute('INSERT INTO movies (title, genre, plot, characters, tone, plot_length, iterations, imdb_rating, '
+                     'rt_rating) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                     (title, genre, plot, characters, tone, plot_length, iterations, imdb_rating, rt_rating))
         conn.commit()
         conn.close()
         return redirect(url_for('index'))

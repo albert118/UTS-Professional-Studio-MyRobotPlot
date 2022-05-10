@@ -9,9 +9,11 @@ VOWELS = ['a', 'e', 'i', 'o', 'u']
 
 
 class PlotIteration:
-	def __init__(self, _logger, plot: str, star_rating: str, genre_rating: str, improvement: str):
+	def __init__(self, _logger, title: str, plot: str, imdb_rating: str, rt_rating: str, genre_rating: str, improvement: str):
+		self.title = title
 		self.plot = plot
-		self.star_rating = star_rating
+		self.imdb_rating = imdb_rating
+		self.rt_rating = rt_rating
 		self.genre_rating = genre_rating
 		self.improvement = improvement
 
@@ -19,26 +21,31 @@ class PlotIteration:
 
 	def __repr__(self):
 		return f"""
+			title       : {self.title}\n
             plot        : {self.plot}\n
-            stars       : {self.star_rating}\n
+            imdb_rating : {self.imdb_rating}\n
+			rt_rating   : {self.rt_rating}\n
             genre_rating: {self.genre_rating}\n
             improvement : {self.improvement}\n"""
 
 	def __str__(self):
 		return f"""
+			title       : {self.title}\n
             plot        : {self.plot}\n
-            stars       : {self.star_rating}\n
+            imdb_rating : {self.imdb_rating}\n
+			rt_rating   : {self.rt_rating}\n
             genre_rating: {self.genre_rating}\n
             improvement : {self.improvement}\n"""
 
 
-def get_plot():
-	plot_iters = run_movie_plot_tool()
-	return filter(plot_iters, get_high_rating)
+# def get_plot():
+# 	plot_iters = run_movie_plot_tool()
+# 	return filter(plot_iters, get_high_rating)
 
 
-def get_high_rating():
-	pass
+def get_raw_rating(raw_rating):
+	extracted_rating = re.findall(r"\d+\.\d+", raw_rating)
+	return extracted_rating[0]
 
 
 def run_movie_plot_tool(_logger, _args) -> list:
@@ -53,14 +60,19 @@ def run_movie_plot_tool(_logger, _args) -> list:
 	)
 
 	movie_plot = get_gpt3(init_prompt)
-	star_rating = get_rating(movie_plot)
+	title = get_title(movie_plot)
+
+	imdb_rating = get_imdb_rating(movie_plot)
+	rt_rating = get_rt_rating(movie_plot)
 	genre_rating = get_genre(movie_plot, _args.genre)
 	improvement = get_improvements(movie_plot)
 
 	plot_iters.append(PlotIteration(
 		_logger,
+		title,
 		movie_plot,
-		star_rating,
+		imdb_rating,
+		rt_rating,
 		genre_rating,
 		improvement
 	))
@@ -76,15 +88,19 @@ def run_movie_plot_tool(_logger, _args) -> list:
 			validated = plot_iters[i - 1].plot
 
 		plot = (generate_improved_plot(validated, plot_iters[i - 1].improvement)).strip()
-		star_rating = get_rating(plot)
+		title = get_title(movie_plot)
+		imdb_rating = get_imdb_rating(plot)
+		rt_rating = get_rt_rating(plot)
 		genre_rating = get_genre(plot, _args.genre)
 		improvement = get_improvements(plot)
 		valid = valid_genre(genre_rating)
 
 		plot_iters.append(PlotIteration(
 			_logger,
+			title,
 			movie_plot,
-			star_rating,
+			imdb_rating,
+			rt_rating,
 			genre_rating,
 			improvement
 		))
@@ -131,13 +147,13 @@ def get_gpt3(prompt, engine='text-davinci-002', max_tokens=3000,
 
 
 def generate_prompt_init(_logger, genre, tone, characters, length):
-	model_prompt = "Write a movie plot from scratch using the following " \
+	model_prompt = "Write an original movie plot using the following criteria " \
 				   "criteria: \n" + \
 				   "Genre: " + genre + "\n"
 	if tone:
 		model_prompt += "Tone: " + tone + "\n"
 	if characters and len(characters) > 0:
-		model_prompt += f"Characters (Ignore characters from known movie plots): {' '.join(characters)}\n"
+		model_prompt += f"Characters: {' '.join(characters)}\n"
 	if length:
 		model_prompt += f"Length: {length}\n"
 
@@ -166,8 +182,27 @@ def generate_improved_plot(plot, improvements):
 	return get_gpt3(model_prompt)
 
 
-def get_rating(movie):
-	prompt = "On a scale of 1-5, rate this movie plot: \n" + movie + '\n\n'
+def get_imdb_rating(movie):
+	prompt = "On a scale of 0.0 to 10.0, (eg. 6.5) give this plot an imdb rating: \n" + movie + '\n\n'
+	print(prompt + '\n')
+	raw_imdb_out = get_gpt3(prompt)
+	return get_raw_rating(raw_imdb_out)
+
+
+def get_rt_rating(movie):
+	prompt = "On a scale of 0.0 to 10.0, (eg. 6.5) give this plot a rotten tomatoes rating: \n" + movie + '\n\n'
+	print(prompt + '\n')
+	raw_rt_out = get_gpt3(prompt)
+	print("Raw: " + raw_rt_out)
+	cleaned_rt_rating = get_raw_rating(raw_rt_out)
+	print("Cleaned: " + cleaned_rt_rating)
+	percentage_rating = "{:.0%}".format(float(cleaned_rt_rating) / 10)
+	print("Percentage: " + percentage_rating)
+	return percentage_rating
+
+
+def get_title(movie):
+	prompt = "Create a title for this movie plot: \n" + movie + '\n\n'
 	print(prompt + '\n')
 	return get_gpt3(prompt)
 
@@ -184,7 +219,7 @@ def get_genre(movie, genre):
 
 
 def get_improvements(movie):
-	prompt = "Provide some original ideas of how this movie plot could be improved: \n" + movie + '\n\n'
+	prompt = "Provide some ideas of how this movie plot could be improved: \n" + movie + '\n\n'
 	print(prompt + '\n')
 	return get_gpt3(prompt)
 

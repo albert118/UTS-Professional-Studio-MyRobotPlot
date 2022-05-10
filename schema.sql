@@ -9,5 +9,7 @@ CREATE TABLE movies (
     characters TEXT NOT NULL,
     tone TEXT NOT NULL,
     plot_length INTEGER NOT NULL,
-    iterations INTEGER NOT NULL
+    iterations INTEGER NOT NULL,
+    imdb_rating TEXT NOT NULL,
+    rt_rating TEXT NOT NULL
 );

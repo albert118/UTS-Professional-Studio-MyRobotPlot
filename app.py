@@ -9,6 +9,7 @@ GENRE_LIST = ['action', 'comedy', 'drama', 'fantasy', 'horror', 'mystery', 'roma
 TONE_LIST = ['happy', 'sad', 'serious', 'humorous', 'threatening', 'pessimistic', 'optimistic', 'anxious', 'excited', 'depressing']
 VOWELS = ['a','e', 'i', 'o', 'u']
 
+
 class MovieCriteria:
 	def __init__(self, _logger, genre: str, tone: str, character: str, length: int, iterations: int):
 		self.genre = genre
@@ -17,6 +18,7 @@ class MovieCriteria:
 		self.length = length
 		self.iterations = iterations
 		_logger.info(self)
+
 
 def web_tool(user_selection):
 	_logger = setup_logger()
@@ -31,7 +33,8 @@ def web_tool(user_selection):
 	print(plot_iters[-1].plot)
 	print(10*"*")
 
-	return plot_iters[-1].plot
+	return plot_iters[-1].title, plot_iters[-1].plot, plot_iters[-1].imdb_rating, plot_iters[-1].rt_rating
+
 
 def main():
 
@@ -40,14 +43,17 @@ def main():
 	print(_args)
 	builder.run_movie_plot_tool(_logger, _args)
 
+
 def show_pipeline_results(df, logger):
 	logger.info(df.info())
 	logger.info(df.head())
+
 
 def setup_logger():
 	LOG_LVL = logging.NOTSET
 	logging.basicConfig(level=LOG_LVL)
 	return logging.getLogger(__name__)
+
 
 def setup_argparser(_logger):
 	_parser = init_argparser()
@@ -56,11 +62,13 @@ def setup_argparser(_logger):
 
 	return _args
 
+
 def check_args(_args, _logger):
 	if _args.tone and _args.tone.lower() not in TONE_LIST:
 		_logger.error('Tone must be from list: happy, sad, serious, humorous, threatening, pessimistic, optimistic, anxious, excited, depressing.')
 	if _args.genre.lower() not in GENRE_LIST:
 		_logger.error('Genre must be from list: action, comedy, drama, fantasy, horror, mystery, romance, thriller, western.')
+
 
 def init_argparser():
 	_parser = argparse.ArgumentParser(
@@ -93,6 +101,7 @@ def init_argparser():
 
 	return _parser
 
+
 def run_pipelines(_logger):
 	# Run initial pipeline
 	raw_file_path = "data\\raw_data\\TheMoviesDataset\\credits.csv"
@@ -114,6 +123,7 @@ def run_pipelines(_logger):
 		show_pipeline_results(loaded_frame, _logger)
 
 		loaded_frame.to_csv(f'{normalise_filepath(fn)}_processed.csv')
+
 
 if __name__ == "__main__":
 	main()
