@@ -5,16 +5,15 @@
     <h1 style="padding-bottom: 20px">{% block title %} Welcome to MyRoblotPlot! {% endblock %}</h1>
     <p> Here are some example plots created by GPT-3:
     </p>
-    <div class="left">
+
     {% for movie in movies %}
+    <div class="left">
         <a href="{{ url_for('movie', movie_id=movie['id']) }}">
             <h2>{{ movie['title'] }}
-
+<!--                    <a href="{{ url_for('edit', id=movie['id']) }}" class>-->
+<!--                        <span class="badge badge-warning">Edit</span>-->
+<!--                    </a>-->
             </h2>
-            <a href="{{ url_for('edit', id=movie['id']) }}">
-                <span class="badge badge-warning">Edit</span>
-            </a>
-
         </a>
 <!--        <span class="badge badge-primary">{{ movie['created'] }}</span>-->
 

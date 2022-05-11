@@ -1,4 +1,6 @@
 import os
+from os import listdir
+from os.path import isfile, join
 import sqlite3
 from flask import Flask, render_template, request, url_for, flash, redirect
 from werkzeug.exceptions import abort
@@ -8,6 +10,7 @@ from .app import web_tool
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 
 def get_db_connection():
@@ -37,13 +40,27 @@ def index():
 @app.route('/<int:movie_id>')
 def movie(movie_id):
     movie = get_movie(movie_id)
+    first_word, second_word = movie['title'].split()[:2]
+    first_word = ''.join(ch for ch in first_word if ch.isalnum())
+    second_word = ''.join(ch for ch in second_word if ch.isalnum())
+    movie_folder = first_word + "_" + second_word
+    path = 'static/images/' + movie_folder
+    print(path)
 
+    placeholder = False
+    if os.path.isdir(path):
+        if len(os.listdir(path)) != 0:
+            image_file_paths = ['images/' + movie_folder + '/' + f for f in listdir(path) if isfile(join(path, f))]
+        else:
+            placeholder = True
+    else:
+        placeholder = True
 
-    # if os.path.isdir('static/' + movie.title.replace(' ', '_')):
-    #     for movie in :
-    #         "image_" + i = 1
+    if placeholder:
+        path = 'static/placeholders/'
+        image_file_paths = ['placeholders/' + f for f in listdir(path) if isfile(join(path, f))]
 
-    return render_template('movie.html', movie=movie)
+    return render_template('movie.html', movie=movie, images=image_file_paths)
 
 
 @app.route('/create', methods=('GET', 'POST'))

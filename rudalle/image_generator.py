@@ -53,7 +53,9 @@ def get_image(plot, title):
     #     i += 1
     #     image.save(text[:10] + str(i) + "_output.jpg")
 
-    sr_images = super_resolution(pil_images, realesrgan)
+    top_images, clip_scores = cherry_pick_by_ruclip(pil_images, text, clip_predictor, count=6)
+
+    sr_images = super_resolution(top_images, realesrgan)
     # show(sr_images, 3)
 
     path = title.replace(' ', '_')
@@ -76,6 +78,6 @@ def get_image(plot, title):
     return top_images, clip_scores
 
 if __name__ == "__main__":
-    plot = "violinist on stage"
+    plot = "magic spell"
     title = plot
     get_image(plot, title)
