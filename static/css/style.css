@@ -46,6 +46,10 @@ h2:hover{
     min-height: 1024px;
 }
 
+h1 {
+    font-size: 3rem; 
+}
+
 h2 {
     font-size:40px;
     margin-left:10px;
@@ -64,7 +68,7 @@ h2 {
 
 main {
     margin: 0 auto;
-    width: 50%;
+    width: 60%;
     text-align: center;
     box-sizing: border-box;
     padding: 50px;
@@ -92,3 +96,21 @@ footer {
     font-weight:bold;
 }
 
+.mynavbarlogotext {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.navbarlink {
+    font-size: 20px;
+}
+
+.movielist {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+}

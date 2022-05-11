@@ -3,16 +3,16 @@
 {% block content %}
 <main>
     <h1 style="padding-bottom: 20px">{% block title %} Welcome to MyRobotPlot! {% endblock %}</h1>
-    <p> Here are some example plots created by GPT-3:
+    <p style="font-size: 1.3rem;"> Here are some example plots created by GPT-3:
     </p>
-    <div class="left">
+    <div>
     {% for movie in movies %}
-        <a href="{{ url_for('movie', movie_id=movie['id']) }}">
+        <a href="{{ url_for('movie', movie_id=movie['id']) }}" class="movielist">
             <h2>{{ movie['title'] }}
 
             </h2>
-            <a href="{{ url_for('edit', id=movie['id']) }}">
-                <span class="badge badge-warning">Edit</span>
+            <a href="{{ url_for('edit', id=movie['id']) }}" class="badge badge-warning">
+                Edit
             </a>
 
         </a>
