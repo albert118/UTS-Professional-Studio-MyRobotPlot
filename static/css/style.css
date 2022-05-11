@@ -10,18 +10,24 @@
 
 table-centered {
   text-align: center;
-  background:blue;
 }
 
 body {
     background-color: black;
     color: white;
-    }
+}
 
+.bg-color{
+    background-color: #373737;
+}
 .left {
   margin-left: auto;
   margin-right: auto;
   text-align: left;
+}
+
+h2:hover{
+    color:#f3ce13;
 }
 
 .container * {
@@ -42,10 +48,15 @@ body {
     min-height: 2000px;
 }
 
+h1 {
+    font-size: 3rem;
+}
+
 h2 {
     font-size:40px;
     margin-left:10px;
     margin-bottom:15px;
+    transition: 0.2s ease-in-out;
 }
 
 .form_div {
@@ -86,3 +97,21 @@ footer {
     font-weight:bold;
 }
 
+.mynavbarlogotext {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.navbarlink {
+    font-size: 20px;
+}
+
+.movielist {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+}
