@@ -69,10 +69,12 @@ h2 {
 }
 
 main {
-    width: 50%;
+    margin: 0 auto;
+    width: 65%;
     display: inline-block;
     margin: 0 auto;
     padding: 50px;
+    vertical-align: top;
 }
 aside {
     margin: 0 auto;
