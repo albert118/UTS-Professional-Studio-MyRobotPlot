@@ -8,6 +8,7 @@ from .app import web_tool
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 
 def get_db_connection():
