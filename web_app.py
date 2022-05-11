@@ -2,6 +2,7 @@ import sqlite3
 from flask import Flask, render_template, request, url_for, flash, redirect
 from werkzeug.exceptions import abort
 from .app import web_tool
+from .rudalle.image_generator import get_image
 
 
 app = Flask(__name__)
@@ -53,6 +54,10 @@ def create():
             title = title
         else:
             title = user_title
+
+        image_option=False
+        if image_option == True:
+            get_image(plot, title)
         conn = get_db_connection()
         conn.execute('INSERT INTO movies (title, genre, plot, characters, tone, plot_length, iterations, imdb_rating, '
                      'rt_rating) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',

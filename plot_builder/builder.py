@@ -44,7 +44,11 @@ class PlotIteration:
 
 
 def get_raw_rating(raw_rating):
-	extracted_rating = re.findall(r"\d+\.\d+", raw_rating)
+	try:
+		extracted_rating = re.findall(r"\d+\.\d+", raw_rating)
+	except:
+		extracted_rating = re.findall(r"\d+", raw_rating)
+
 	return extracted_rating[0]
 
 
