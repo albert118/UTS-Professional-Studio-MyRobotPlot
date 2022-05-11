@@ -1,3 +1,4 @@
+import os
 import sqlite3
 from flask import Flask, render_template, request, url_for, flash, redirect
 from werkzeug.exceptions import abort
@@ -36,6 +37,12 @@ def index():
 @app.route('/<int:movie_id>')
 def movie(movie_id):
     movie = get_movie(movie_id)
+
+
+    # if os.path.isdir('static/' + movie.title.replace(' ', '_')):
+    #     for movie in :
+    #         "image_" + i = 1
+
     return render_template('movie.html', movie=movie)
 
 
@@ -55,9 +62,9 @@ def create():
         else:
             title = user_title
 
-        image_option=False
-        if image_option == True:
-            get_image(plot, title)
+        # image_option=False
+        # if image_option == True:
+        #     get_image(plot, title)
         conn = get_db_connection()
         conn.execute('INSERT INTO movies (title, genre, plot, characters, tone, plot_length, iterations, imdb_rating, '
                      'rt_rating) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
