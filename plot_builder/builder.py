@@ -2,6 +2,8 @@ import re
 
 import openai
 
+from .plot_iteration import PlotIteration
+
 GENRE_LIST = ['action', 'comedy', 'drama', 'fantasy', 'horror', 'mystery', 'romance', 'thriller', 'western']
 TONE_LIST = ['happy', 'sad', 'serious', 'humorous', 'threatening', 'pessimistic', 'optimistic', 'anxious', 'excited',
 			 'depressing']
@@ -11,47 +13,8 @@ VOWELS = ['a', 'e', 'i', 'o', 'u']
 # 								Runners
 ################################################################################
 
-class PlotIteration:
-	def __init__(self, _logger, title: str, plot: str, imdb_rating: str, rt_rating: str, genre_rating: str, improvement: str):
-		self.title = title
-		self.plot = plot
-		self.imdb_rating = imdb_rating
-		self.rt_rating = rt_rating
-		self.genre_rating = genre_rating
-		self.improvement = improvement
-
-		_logger.info(self)
-
-	def __repr__(self):
-		return f"""
-			title       : {self.title}\n
-            plot        : {self.plot}\n
-            imdb_rating : {self.imdb_rating}\n
-			rt_rating   : {self.rt_rating}\n
-            genre_rating: {self.genre_rating}\n
-            improvement : {self.improvement}\n"""
-
-	def __str__(self):
-		return f"""
-			title       : {self.title}\n
-            plot        : {self.plot}\n
-            imdb_rating : {self.imdb_rating}\n
-			rt_rating   : {self.rt_rating}\n
-            genre_rating: {self.genre_rating}\n
-            improvement : {self.improvement}\n"""
-
-
-def get_raw_rating(raw_rating):
-	try:
-		extracted_rating = re.findall(r"\d+\.\d+", raw_rating)
-	except:
-		extracted_rating = re.findall(r"\d+", raw_rating)
-
-	return extracted_rating[0]
-
-
-def run_movie_plot_tool(_logger, _args) -> list:
-	conf_openAi()
+def run_movie_plot_tool(_logger, _args, openAiApiKey='OPEN API KEY HERE') -> list:
+	conf_openAi(openAiApiKey)
 
 	plot_iters = []
 
@@ -226,7 +189,13 @@ def valid_genre(output):
 	else:
 		return True
 
-def conf_openAi():
-	openAi_Api_key = "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"
+def get_raw_rating(raw_rating):
+	try:
+		extracted_rating = re.findall(r"\d+\.\d+", raw_rating)
+	except:
+		extracted_rating = re.findall(r"\d+", raw_rating)
 
-	openai.api_key = openAi_Api_key
+	return extracted_rating[0]
+
+def conf_openAi(openAiApiKey: str):
+	openai.api_key = openAiApiKey
