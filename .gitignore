@@ -135,6 +135,7 @@ dmypy.json
 Scripts/*
 pyvenv.cfg
 
-# Embedded Data sets (too large for repo) and scratch csv's
+# Embedded data, databases, and scratch csv's (too large for repo)
 EmbeddedData/*
 *.csv
+*.db
