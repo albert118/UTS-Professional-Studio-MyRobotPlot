@@ -1,0 +1,1 @@
+# Database bootstrap migration with initial DDL

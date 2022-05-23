@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main>
+    <h1 style="padding-bottom: 20px">{% block title %} Welcome to MyRobotPlot! {% endblock %}</h1>
+    <p style="font-size: 1.3rem"> 
+        Here are some example plots created by GPT-3:
+    </p>
+
+    {% for movie in movies %}
+    <div class="left">
+        <a href="{{ url_for('movie', movie_id=movie['id']) }}" class="movielist">
+            <h2>{{ movie['title'] }}</h2>
+        </a>
+        <hr>
+    </div>
+    {% endfor %}
+</main>
+{% endblock %}
