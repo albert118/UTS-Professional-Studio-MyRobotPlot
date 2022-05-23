@@ -1,15 +1,19 @@
 import os
+import sqlite3
 from os import listdir
 from os.path import isfile, join
-import sqlite3
-from flask import Flask, render_template, request, url_for, flash, redirect
+
+from flask import Flask, flash, redirect, render_template, request, url_for
 from werkzeug.exceptions import abort
+
 from .app import web_tool
+
+# if you want to generate images, add this import
 # from .rudalle.image_generator import get_image
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your secret key'
+app.config['SECRET_KEY'] = 'your very, very secret key which should be configured in the environment and not on GitHub'
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 
@@ -79,9 +83,6 @@ def create():
         else:
             title = user_title
 
-        # image_option=False
-        # if image_option == True:
-        #     get_image(plot, title)
         conn = get_db_connection()
         conn.execute('INSERT INTO movies (title, genre, plot, characters, tone, plot_length, iterations, imdb_rating, '
                      'rt_rating) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
@@ -124,4 +125,3 @@ def delete(id):
     conn.close()
     flash('"{}" was successfully deleted!'.format(movie['title']))
     return redirect(url_for('index'))
-
