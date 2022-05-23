@@ -7,6 +7,9 @@ TONE_LIST = ['happy', 'sad', 'serious', 'humorous', 'threatening', 'pessimistic'
 			 'depressing']
 VOWELS = ['a', 'e', 'i', 'o', 'u']
 
+################################################################################
+# 								Runners
+################################################################################
 
 class PlotIteration:
 	def __init__(self, _logger, title: str, plot: str, imdb_rating: str, rt_rating: str, genre_rating: str, improvement: str):
@@ -36,11 +39,6 @@ class PlotIteration:
 			rt_rating   : {self.rt_rating}\n
             genre_rating: {self.genre_rating}\n
             improvement : {self.improvement}\n"""
-
-
-# def get_plot():
-# 	plot_iters = run_movie_plot_tool()
-# 	return filter(plot_iters, get_high_rating)
 
 
 def get_raw_rating(raw_rating):
@@ -112,15 +110,9 @@ def run_movie_plot_tool(_logger, _args) -> list:
 	_logger.info(plot_iters)
 	return plot_iters
 
-
-####################################################################################
-####################################################################################
-####################################################################################
-####################################################################################
-####################################################################################
-####################################################################################
-####################################################################################
-####################################################################################
+################################################################################
+# 								Utils
+################################################################################
 
 def get_characters(_logger, characters):
 	_logger.info("Getting characters for plot!")
@@ -130,7 +122,6 @@ def get_characters(_logger, characters):
 	_logger.info(f"Got characters {_characters}")
 
 	return _characters
-
 
 def get_gpt3(prompt, engine='text-davinci-002', max_tokens=3000,
 			 temperature=1, top_p=1, frequency_penalty=0, presence_penalty=0):
@@ -148,7 +139,6 @@ def get_gpt3(prompt, engine='text-davinci-002', max_tokens=3000,
 	answer = response.choices[0]['text']
 
 	return cleanOutput(answer)
-
 
 def generate_prompt_init(_logger, genre, tone, characters, length):
 	model_prompt = "Write an original movie plot using the following criteria " \
@@ -169,12 +159,10 @@ def generate_prompt_init(_logger, genre, tone, characters, length):
 
 	return model_prompt
 
-
 def validatePlot(plot, genre):
 	prompt = "Turn this plot into a " + genre + " plot: " + plot + "\n\n"
 	print(prompt + '\n')
 	return get_gpt3(prompt)
-
 
 def generate_improved_plot(plot, improvements):
 	model_prompt = "This is a movie plot: \n" + plot + "\n" \
@@ -185,13 +173,11 @@ def generate_improved_plot(plot, improvements):
 	print(20 * "*")
 	return get_gpt3(model_prompt)
 
-
 def get_imdb_rating(movie):
 	prompt = "On a scale of 0.0 to 10.0, (eg. 6.5) give this plot an imdb rating: \n" + movie + '\n\n'
 	print(prompt + '\n')
 	raw_imdb_out = get_gpt3(prompt)
 	return get_raw_rating(raw_imdb_out)
-
 
 def get_rt_rating(movie):
 	prompt = "On a scale of 0.0 to 10.0, (eg. 6.5) give this plot a rotten tomatoes rating: \n" + movie + '\n\n'
@@ -204,12 +190,10 @@ def get_rt_rating(movie):
 	print("Percentage: " + percentage_rating)
 	return percentage_rating
 
-
 def get_title(movie):
 	prompt = "Create a title for this movie plot: \n" + movie + '\n\n'
 	print(prompt + '\n')
 	return get_gpt3(prompt)
-
 
 def get_genre(movie, genre):
 	if genre[0] in VOWELS:
@@ -221,18 +205,14 @@ def get_genre(movie, genre):
 	print(prompt + '\n')
 	return get_gpt3(prompt)
 
-
 def get_improvements(movie):
 	prompt = "Provide some ideas of how this movie plot could be improved: \n" + movie + '\n\n'
 	print(prompt + '\n')
 	return get_gpt3(prompt)
 
-
-# TODO: Adam's suggestion
 def getSocialSatisfaction():
 	prompt = "Is this plot gender or culturally diverse?"
 	return get_gpt3(prompt)
-
 
 def cleanOutput(output):
 	output = re.sub('\n', '', output)
@@ -240,13 +220,11 @@ def cleanOutput(output):
 	output = re.sub('"', '', output)
 	return output
 
-
 def valid_genre(output):
 	if re.search("no", output.lower()):
 		return False
 	else:
 		return True
-
 
 def conf_openAi():
 	openAi_Api_key = "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"
