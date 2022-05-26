@@ -59,3 +59,7 @@ pip freeze -r > requirements
 
 Done!
 
+### (Optional) Image generation using ruDALL-E
+ruDALL-E (https://github.com/ai-forever/ru-dalle) was included in the project to generate images based on a given movie prompt. This feature was not implemented in the most recent release due to the setup process and dependancies required to get it working initially. See the ruDALL-E GitHub page and follow the minimal example (https://colab.research.google.com/drive/1wGE-046et27oHvNlBNPH07qrEQNE04PQ?usp=sharing) to gain a better understanding of how it works. To enable image generation in the plot generation tool, add the import "from .rudalle.image_generator import get_image" into the web_app file. 
+
+Providing a plot and a title to the "get_image" function will generate a sample set of images based on the generated movie plot.
