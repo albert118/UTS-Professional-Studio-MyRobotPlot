@@ -24,7 +24,7 @@ python -m MyRobotPlot
 
 ### Runnning the Web App (++ extra)
 
-1. Set the environ' variable for flask, eg.
+1. Set the environt variable for flask, eg.
 
 ```
 // on Windows
@@ -41,7 +41,7 @@ Run the following to bootstrap the db, then automatically run the initial schema
 python -m init_database
 ```
 
-3. In you Python environment, run the following command to execute the Flask server.
+3. In your Python environment, run the following command to execute the Flask server.
 
 ```
 flask run
