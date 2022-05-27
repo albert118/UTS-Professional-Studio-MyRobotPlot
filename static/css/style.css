@@ -1,0 +1,119 @@
+.head1 {
+    font-size:40px;
+    color:#009900;
+    font-weight:bold;
+}
+
+.middle {
+  text-align: center;
+}
+
+table-centered {
+  text-align: center;
+}
+
+body {
+    background-color: black;
+    color: white;
+}
+
+.bg-color{
+    background-color: #373737;
+}
+.left {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+h2:hover{
+    color:#f3ce13;
+}
+
+.container * {
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+
+.carousel-inner{
+  width:100%;
+  max-height: 2000px !important;
+}
+
+.item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 2000px;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    font-size:40px;
+    margin-left:10px;
+    margin-bottom:15px;
+    transition: 0.2s ease-in-out;
+}
+
+.form_div {
+    margin: 0 auto;
+    width: 75%;
+    text-align: left;
+    float: center;
+    box-sizing: border-box;
+    padding: 50px;
+}
+
+main {
+    margin: 0 auto;
+    width: 65%;
+    display: inline-block;
+    margin: 0 auto;
+    padding: 50px;
+    vertical-align: top;
+}
+aside {
+    margin: 0 auto;
+    display: inline-block;
+    width: 30%;
+    text-align: center;
+    padding: 50px;
+    text-align: center;
+
+}
+
+footer {
+    width: 100%;
+    bottom: 0px;
+    background-color: #000;
+    color: #fff;
+    position: absolute;
+    padding-top:20px;
+    padding-bottom:50px;
+    text-align:center;
+    font-size:30px;
+    font-weight:bold;
+}
+
+.mynavbarlogotext {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.navbarlink {
+    font-size: 20px;
+}
+
+.movielist {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+}
