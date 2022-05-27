@@ -4,6 +4,7 @@ import openai
 
 from .plot_iteration import PlotIteration
 
+# Options user can choose from - genre & tone. More options can be added. 
 GENRE_LIST = ['action', 'comedy', 'drama', 'fantasy', 'horror', 'mystery', 'romance', 'thriller', 'western']
 TONE_LIST = ['happy', 'sad', 'serious', 'humorous', 'threatening', 'pessimistic', 'optimistic', 'anxious', 'excited',
 			 'depressing']
@@ -18,21 +19,21 @@ def run_movie_plot_tool(_logger, _args, openAiApiKey='OPEN API KEY HERE') -> lis
 
 	plot_iters = []
 
-	characters = get_characters(_logger, _args.character)
-	init_prompt = generate_prompt_init(
+	characters = get_characters(_logger, _args.character)			# Gather the characters from string input 
+	init_prompt = generate_prompt_init(								# Establish the initial prompt 
 		_logger,
 		_args.genre, _args.tone, characters, _args.length
 	)
 
-	movie_plot = get_gpt3(init_prompt)
-	title = get_title(movie_plot)
+	movie_plot = get_gpt3(init_prompt)								# Get first movie plot from GPT-3
+	title = get_title(movie_plot)									# Get movie title of movie movie plot 
 
-	imdb_rating = get_imdb_rating(movie_plot)
-	rt_rating = get_rt_rating(movie_plot)
-	genre_rating = get_genre(movie_plot, _args.genre)
-	improvement = get_improvements(movie_plot)
+	imdb_rating = get_imdb_rating(movie_plot)						# Get IMDb rating
+	rt_rating = get_rt_rating(movie_plot)							# Get Rotten Tomatoes rating
+	genre_rating = get_genre(movie_plot, _args.genre)				# Get genre rating from initial input 
+	improvement = get_improvements(movie_plot)						# Get suggested inputs 
 
-	plot_iters.append(PlotIteration(
+	plot_iters.append(PlotIteration(								# Append above information to an iterable 
 		_logger,
 		title,
 		movie_plot,
@@ -43,6 +44,10 @@ def run_movie_plot_tool(_logger, _args, openAiApiKey='OPEN API KEY HERE') -> lis
 	))
 
 	valid = True
+
+	"""This loop is the 'validator' feature of GPT-3. The movie plot will be put through multiple validation 
+	tests to (potentially) be improved. Each iteration will be logged into an iterable and best one will be 
+	determined by the star rating or human interpretation. """
 
 	for i in range(1, _args.iterations):
 		_logger.info(f"Loop: {i}")
@@ -86,9 +91,18 @@ def get_characters(_logger, characters):
 
 	return _characters
 
+"""
+Using Open AI's API and text-davinci-002 engine. Can choose from the following engines 
+	- text-davinci-002				- davinci-instruct-beta
+	- text-curie-001				- davinci
+	- text-babbage-001				- curie-instruct-beta
+	- text-ada-001					- curie
+	- text-davinci-001				- babbage
+	- ada
+"""
 def get_gpt3(prompt, engine='text-davinci-002', max_tokens=3000,
 			 temperature=1, top_p=1, frequency_penalty=0, presence_penalty=0):
-	# TODO: Implement length of response from CLI input.
+
 	response = openai.Completion.create(
 		prompt=prompt,
 		engine=engine,
@@ -103,6 +117,7 @@ def get_gpt3(prompt, engine='text-davinci-002', max_tokens=3000,
 
 	return cleanOutput(answer)
 
+# Function that generates the initial prompt 
 def generate_prompt_init(_logger, genre, tone, characters, length):
 	model_prompt = "Write an original movie plot using the following criteria " \
 				   "criteria: \n" + \
@@ -122,11 +137,13 @@ def generate_prompt_init(_logger, genre, tone, characters, length):
 
 	return model_prompt
 
+# Function to validate plot is of same genre as input 
 def validatePlot(plot, genre):
 	prompt = "Turn this plot into a " + genre + " plot: " + plot + "\n\n"
 	print(prompt + '\n')
 	return get_gpt3(prompt)
 
+# Function to improve plot based on the suggestions made by GPT-3
 def generate_improved_plot(plot, improvements):
 	model_prompt = "This is a movie plot: \n" + plot + "\n" \
 				   + "Improve the plot using the following suggestions: \n" + improvements + '\n\n'
@@ -136,12 +153,14 @@ def generate_improved_plot(plot, improvements):
 	print(20 * "*")
 	return get_gpt3(model_prompt)
 
+# Function to get IMDb rating of movie plot from GPT-3 
 def get_imdb_rating(movie):
 	prompt = "On a scale of 0.0 to 10.0, (eg. 6.5) give this plot an imdb rating: \n" + movie + '\n\n'
 	print(prompt + '\n')
 	raw_imdb_out = get_gpt3(prompt)
 	return get_raw_rating(raw_imdb_out)
 
+# Function to get Rotton Tomatoes rating of movie plot from GPT-3 
 def get_rt_rating(movie):
 	prompt = "On a scale of 0.0 to 10.0, (eg. 6.5) give this plot a rotten tomatoes rating: \n" + movie + '\n\n'
 	print(prompt + '\n')
@@ -153,11 +172,13 @@ def get_rt_rating(movie):
 	print("Percentage: " + percentage_rating)
 	return percentage_rating
 
+# Function to get title of movie plot from GPT-3 
 def get_title(movie):
 	prompt = "Create a title for this movie plot: \n" + movie + '\n\n'
 	print(prompt + '\n')
 	return get_gpt3(prompt)
 
+# Function to get genre of a movie plot from GPT-3
 def get_genre(movie, genre):
 	if genre[0] in VOWELS:
 		grammar = 'n '
@@ -168,27 +189,32 @@ def get_genre(movie, genre):
 	print(prompt + '\n')
 	return get_gpt3(prompt)
 
+# Function to get improvements of a movie plot from GPT-3
 def get_improvements(movie):
 	prompt = "Provide some ideas of how this movie plot could be improved: \n" + movie + '\n\n'
 	print(prompt + '\n')
 	return get_gpt3(prompt)
 
+# Function to get social satisfaction score of a movie plot from GPT-3
 def getSocialSatisfaction():
 	prompt = "Is this plot gender or culturally diverse?"
 	return get_gpt3(prompt)
 
+# Cleans the return outputs from GPT by removing '\n' and quotations
 def cleanOutput(output):
 	output = re.sub('\n', '', output)
 	output = re.sub("'", '', output)
 	output = re.sub('"', '', output)
 	return output
 
+# Function to check whether returned output is valid or not by searching for the term 'no'
 def valid_genre(output):
 	if re.search("no", output.lower()):
 		return False
 	else:
 		return True
 
+# Function to get the raw rating of the movie plot from GPT-2
 def get_raw_rating(raw_rating):
 	try:
 		extracted_rating = re.findall(r"\d+\.\d+", raw_rating)
@@ -197,5 +223,6 @@ def get_raw_rating(raw_rating):
 
 	return extracted_rating[0]
 
+# Extract API key
 def conf_openAi(openAiApiKey: str):
 	openai.api_key = openAiApiKey
