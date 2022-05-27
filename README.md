@@ -4,7 +4,7 @@ _UTS Professional / Applications Studio Project_
 
 My Robot Plot is a project designed to gain an improved understanding towards a specific type of machine learning called Natural Learning Processing, designed to predict and estimate word and sentence generation. The basic dataset that will be used by the team will consist of movie plots taken from public data sources, such as Wikipedia. The team aims to generate and develop new movie plots based off existing information, and ultimately create a machine learning model that can create understandable and fluent movie plots. This exercise will allow for a better understanding of the power of NLP and its subcomponents. 
 
-### Environement Set up
+### Environment Set up
 Using Python verison 3.9.+ to 3.10.0, set up the environment like so.
 
 Create and source your choice of virtual environment, eg. [venv](https://virtualenv.pypa.io/en/latest/). I also recommend the [win wrapper](https://pypi.org/project/virtualenvwrapper-win/) if you're on Windows. Activate it, then install the dependencies with pip like so,
@@ -24,7 +24,7 @@ python -m MyRobotPlot
 
 ### Runnning the Web App (++ extra)
 
-1. Set the environ' variable for flask, eg.
+1. Set the environt variable for flask, eg.
 
 ```
 // on Windows
@@ -41,7 +41,7 @@ Run the following to bootstrap the db, then automatically run the initial schema
 python -m init_database
 ```
 
-3. In you Python environment, run the following command to execute the Flask server.
+3. In your Python environment, run the following command to execute the Flask server.
 
 ```
 flask run
